@@ -1,0 +1,47 @@
+{
+  "name": "<%= extensionName %>",
+  "version": "<%= props.version %>",
+  "main": "main.js",
+  "description": "<%= props.description %>",
+  "homepage": "<%= props.homepage %>",
+  "bugs": "<%= repoUrl %>/issues",
+  "license": "<%= props.license %>",
+  "author": {
+    "name": "<%= props.authorName %>",
+    "email": "<%= props.authorEmail %>"<% if (props.authorUrl) { %>,
+    "url": "<%= props.authorUrl %>"<% } %>
+  },
+  "scripts": {
+    "test": "mocha unittests.js"
+  },
+  "keywords": [
+    "brackets"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "<%= repoUrl %>.git"
+  },
+  "licenses": [
+    {
+      "type": "<%= props.license %>"
+    }
+  ],
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "grunt-mocha": "~0.4.10",
+    "load-grunt-tasks": "~0.4.0",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-compress": "~0.8.0",
+    "grunt-jsdoc": "^0.5.4",
+    "time-grunt": "~0.3.1",
+    "grunt-cli": "~0.1.13",
+    "sinon-chai": "~2.5.0",
+    "chai": "~1.9.1",
+    "mocha": "~1.18.2",
+    "sinon": "~1.9.1"
+  },
+  "engines": {
+    "brackets": ">=0.35.0"
+  }
+}
