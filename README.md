@@ -1,4 +1,4 @@
-# generator-brackets-extension [![Build Status](https://secure.travis-ci.org/ingorichter/generator-brackets-extension.png?branch=master)](https://travis-ci.org/ingorichter/generator-brackets-extension)
+# generator-brackets-extension [![Build Status](https://secure.travis-ci.org/ingorichter/generator-brackets-extension.svg?branch=master)](https://travis-ci.org/ingorichter/generator-brackets-extension)
 
 > [Yeoman](http://yeoman.io) generator
 
