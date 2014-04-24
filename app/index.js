@@ -5,6 +5,8 @@ var path = require('path');
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 
+var SMALL = 1, MEDIUM = 2, LARGE = 3;
+
 var BracketsExtensionGenerator = yeoman.generators.Base.extend({
   init: function () {
     this.pkg = require('../package.json');
@@ -18,8 +20,16 @@ var BracketsExtensionGenerator = yeoman.generators.Base.extend({
     // options
     this.defaultOptions = {};
 
-    if (this.options['simple']) {
+    if (this.options['small']) {
+      this.defaultOptions.size = SMALL;
+    }
 
+    if (this.options['medium']) {
+      this.defaultOptions.size = MEDIUM;
+    }
+
+    if (this.options['large']) {
+      this.defaultOptions.size = LARGE;
     }
   },
 
@@ -62,12 +72,12 @@ var BracketsExtensionGenerator = yeoman.generators.Base.extend({
         default: this.user.git.email
     },
     {
-        name: 'authorUrl',
-        message: 'Author\'s homepage?'
-    },
-    {
         name: 'githubUsername',
         message: 'Author\'s Github username?'
+    },
+    {
+        name: 'authorUrl',
+        message: 'Author\'s homepage?'
     },
     {
         name: 'version',
@@ -79,7 +89,19 @@ var BracketsExtensionGenerator = yeoman.generators.Base.extend({
         message: 'License?',
         type: 'list',
         choices: ['MIT', 'Apache']
-    }
+    },
+    {
+        name: 'unitTestSupport',
+        message: 'Scaffold unit test support',
+        type: 'confirm',
+        default: false
+    },
+    {
+        name: 'nlsSupport',
+        message: 'Scaffold NLS (l18n) support',
+        type: 'confirm',
+        default: false
+    },
   ];
 
     this.prompt(prompts, function (props) {
@@ -95,43 +117,61 @@ var BracketsExtensionGenerator = yeoman.generators.Base.extend({
   },
 
   app: function () {
+    // this is always included
     this.copy('_package.json', 'package.json');
-//    this.copy('_bower.json', 'bower.json');
-//    this.copy('brackets.json', '.brackets.json');
-//    this.copy('travis.yml', '.travis.yml');
-
-//    this.template('_README.md', 'README.md');
-
     this.copy('main.js', 'main.js');
+
+    if (this.defaultOptions.size > SMALL) {
+      this.copy('brackets.json', '.brackets.json');
+      this.template('_README.md', 'README.md');
+    }
+
+    if (this.defaultOptions.size > MEDIUM) {
+      this.copy('travis.yml', '.travis.yml');
+    }
   },
 
   nls: function () {
-    // this.mkdir('nls');
-    // this.mkdir('nls/root');
-    // this.mkdir('nls/de');
-    //
-    // this.template('nls/root/_strings.js', 'nls/root/strings.js');
-    // this.template('nls/de/_strings.js', 'nls/de/strings.js');
-    // this.template('nls/_strings.js', 'nls/strings.js');
+    if (this.props.nlsSupport) {
+      this.mkdir('nls');
+      this.mkdir('nls/root');
+      this.mkdir('nls/de');
+
+      this.template('nls/root/_strings.js', 'nls/root/strings.js');
+      this.template('nls/de/_strings.js', 'nls/de/strings.js');
+      this.template('nls/_strings.js', 'nls/strings.js');
+    }
   },
 
   tests: function () {
-    // this.mkdir('unittest-files');
-    // this.copy('unittests.js', 'unittests.js');
+    if (this.props.unitTestSupport) {
+      this.mkdir('unittest-files');
+      this.copy('unittests.js', 'unittests.js');
+      this.template('unittest-files/test.json', 'unittest-files/test.json');
+    }
   },
 
   license: function() {
-    // this.template('_' + this.props.license + '_LICENSE', 'LICENSE');
+    if (this.defaultOptions.size > SMALL) {
+      this.template('_' + this.props.license + '_LICENSE', 'LICENSE');
+    }
   },
 
   projectfiles: function () {
-    // this.copy('editorconfig', '.editorconfig');
-    // this.copy('jshintrc', '.jshintrc');
-    // this.copy('gitignore', '.gitignore');
-    // this.copy('gitattributes', '.gitattributes');
-    // this.template('_jsdoc.conf.json', 'jsdoc.conf.json');
-    // this.copy('requirejs-config.json', 'requirejs-config.json');
-    // this.copy('Gruntfile.js', 'Gruntfile.js');
+    // this is always included
+    this.copy('Gruntfile.js', 'Gruntfile.js');
+
+    if (this.defaultOptions.size > SMALL) {
+      this.copy('gitignore', '.gitignore');
+      this.copy('gitattributes', '.gitattributes');
+    }
+
+    if (this.defaultOptions.size > MEDIUM) {
+      this.copy('jshintrc', '.jshintrc');
+      this.copy('editorconfig', '.editorconfig');
+      this.template('_jsdoc.conf.json', 'jsdoc.conf.json');
+      this.copy('requirejs-config.json', 'requirejs-config.json');
+    }
   }
 });
 
