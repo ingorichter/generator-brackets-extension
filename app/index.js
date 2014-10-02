@@ -1,7 +1,5 @@
 'use strict';
 
-var util = require('util');
-var path = require('path');
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 
@@ -20,15 +18,15 @@ var BracketsExtensionGenerator = yeoman.generators.Base.extend({
     // options
     this.defaultOptions = {};
 
-    if (this.options['small']) {
+    if (this.options.small) {
       this.defaultOptions.size = SMALL;
     }
 
-    if (this.options['medium']) {
+    if (this.options.medium) {
       this.defaultOptions.size = MEDIUM;
     }
 
-    if (this.options['large']) {
+    if (this.options.large) {
       this.defaultOptions.size = LARGE;
     }
   },
