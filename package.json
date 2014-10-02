@@ -25,8 +25,8 @@
     "extension"
   ],
   "dependencies": {
-    "yeoman-generator": "~0.16.0",
-    "chalk": "~0.4.0"
+    "yeoman-generator": "~0.17.7",
+    "chalk": "~0.5.1"
   },
   "devDependencies": {
     "mocha": "*"

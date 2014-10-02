@@ -45,17 +45,21 @@ var BracketsExtensionGenerator = yeoman.generators.Base.extend({
     var prompts = [{
       name: 'extensionName',
       message: 'What do you want to call your extension?',
-      default: path.basename(process.cwd())
+      default: this.appname
     },
     {
         name: 'title',
         message: 'What should be the title of your extension?',
-        default: 'The best extension ever'
+        default: 'Something great starts here...'
     },
     {
         name: 'description',
         message: 'Describe your extension?',
         default: 'This is an awesome Brackets extension'
+    },
+    {
+        name: 'githubUsername',
+        message: 'Author\'s Github username?'
     },
     {
         name: 'homepage',
@@ -70,10 +74,6 @@ var BracketsExtensionGenerator = yeoman.generators.Base.extend({
         name: 'authorEmail',
         message: 'Author\'s email adress?',
         default: this.user.git.email
-    },
-    {
-        name: 'githubUsername',
-        message: 'Author\'s Github username?'
     },
     {
         name: 'authorUrl',
@@ -111,6 +111,7 @@ var BracketsExtensionGenerator = yeoman.generators.Base.extend({
       this.inceptionYear = (new Date()).getFullYear();
       this.repoUrl = 'https://github.com/' + props.githubUsername + '/' + this.extensionName;
       this.props = props;
+      this.homepage = (props.homepage) ? props.homepage : this.repoUrl;
 
       done();
     }.bind(this));
@@ -140,6 +141,7 @@ var BracketsExtensionGenerator = yeoman.generators.Base.extend({
       this.template('nls/root/_strings.js', 'nls/root/strings.js');
       this.template('nls/de/_strings.js', 'nls/de/strings.js');
       this.template('nls/_strings.js', 'nls/strings.js');
+      this.template('_strings.js', 'strings.js');
     }
   },
 
